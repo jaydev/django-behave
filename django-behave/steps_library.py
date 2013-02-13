@@ -6,7 +6,8 @@ from behave import *
 
 def get(context, url_part):
     full_url = get_url(context, url_part)
-    return page, resources = context.browser.get(full_url)
+    page, resources = context.browser.get(full_url)
+    return page, resources
 
 def get_url(context, url_part):
     if url_part[0] == '/': url_part = url_part[1:]
@@ -55,4 +56,4 @@ def the_user_is_shown_the_home_page(context):
 def impl(context):
     assert False
 
-# eof 
+# eof
