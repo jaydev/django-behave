@@ -14,8 +14,6 @@ from behave.runner import Runner
 from behave.parser import ParserError
 from behave.formatter.ansi_escapes import escapes
 
-from selenium import webdriver
-
 import sys
 
 
@@ -49,11 +47,12 @@ class DjangoBehaveTestCase(LiveServerTestCase):
         sys.argv = old_argv
         # end of sys.argv kludge
 
-        self.behave_config.server_url = self.live_server_url # property of LiveServerTestCase
-        self.behave_config.browser = webdriver.Firefox()
+        # property of LiveServerTestCase
+        self.behave_config.server_url = self.live_server_url
         self.behave_config.paths = [self.features_dir]
         self.behave_config.format = ['pretty']
-        # disable these in case you want to add set_trace in the tests you're developing
+        # disable these in case you want to add set_trace
+        # in the tests you're developing
         self.behave_config.stdout_capture = False
         self.behave_config.stderr_capture = False
 
