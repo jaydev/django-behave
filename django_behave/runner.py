@@ -21,7 +21,7 @@ import sys
 
 def get_features(app_module):
     app_dir = dirname(app_module.__file__)
-    features_dir = abspath(join(app_dir, 'features'))
+    features_dir = abspath(join(app_dir, 'tests/features'))
     if isdir(features_dir):
         return features_dir
     else:
