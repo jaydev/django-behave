@@ -2,7 +2,6 @@
 """
 
 import unittest
-from pdb import set_trace
 from os.path import dirname, abspath, join, isdir
 
 from django.test.simple import DjangoTestSuiteRunner, reorder_suite
@@ -28,6 +27,7 @@ def get_features(app_module):
 
 class DjangoBehaveTestCase(LiveServerTestCase):
     features_dir = None
+
     def __init__(self, features_dir):
         self.features_dir = features_dir
         super(DjangoBehaveTestCase, self).__init__()
@@ -57,11 +57,8 @@ class DjangoBehaveTestCase(LiveServerTestCase):
         self.behave_config.stderr_capture = False
 
     def runTest(self, result=None):
-        # run behave on a single directory
-        print "run: features_dir=%s" % (self.features_dir)
-
+        """Run behave on a single directory."""
         # from behave/__main__.py
-        stream = self.behave_config.output
         runner = Runner(self.behave_config)
         try:
             failed = runner.run()
@@ -94,7 +91,7 @@ class DjangoBehaveTestCase(LiveServerTestCase):
 
         if failed:
             sys.exit(1)
-        # end of from behave/__main__.py
+        # end behave/__main__.py
 
 
 def make_bdd_test_suite(features_dir):
@@ -107,6 +104,7 @@ def make_test_suite(test_labels, **kwargs):
 
 
 class DjangoBehaveTestSuiteRunner(DjangoTestSuiteRunner):
+
     def build_suite(self, test_labels, extra_tests=None, **kwargs):
         # build standard Django test suite
         suite = unittest.TestSuite()
@@ -136,5 +134,3 @@ class DjangoBehaveTestSuiteRunner(DjangoTestSuiteRunner):
                 suite.addTest(make_bdd_test_suite(features_dir))
 
         return reorder_suite(suite, (LiveServerTestCase,))
-
-# eof:
